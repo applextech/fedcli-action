@@ -1,10 +1,10 @@
 #!/bin/sh
 set -eu
 
-image_ref=$(sed -n 's/^FROM \(public\.ecr\.aws\/c1t8q5x5\/fedcli@sha256:[a-f0-9][a-f0-9]*\)$/\1/p' Dockerfile)
+image_ref=$(sed -n 's/^FROM \(ghcr\.io\/ronwarshawsky\/fedcli@sha256:[a-f0-9][a-f0-9]*\)$/\1/p' Dockerfile)
 
 if [ -z "$image_ref" ]; then
-  printf '%s\n' 'Dockerfile must pin the official FedCLI ECR Public image by SHA-256 digest.' >&2
+  printf '%s\n' 'Dockerfile must pin the official public FedCLI GHCR image by SHA-256 digest.' >&2
   exit 1
 fi
 

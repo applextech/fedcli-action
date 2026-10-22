@@ -1,4 +1,4 @@
-FROM public.ecr.aws/c1t8q5x5/fedcli@sha256:d63a4ef714b0653bf20e0c9aa9d8e6df2c979397e3a52024ee098ba12ce2484d
+FROM ghcr.io/ronwarshawsky/fedcli@sha256:d63a4ef714b0653bf20e0c9aa9d8e6df2c979397e3a52024ee098ba12ce2484d
 
 USER root
 

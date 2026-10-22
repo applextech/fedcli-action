@@ -6,10 +6,10 @@ It is intentionally kept as a repository-root-ready bundle. To publish it in Git
 
 ## What It Runs
 
-The Action builds a small wrapper image from the public FedCLI `1.0.4` ECR Public image pinned to its verified digest:
+The Action builds a small wrapper image from the public FedCLI `1.0.4` GitHub Container Registry image pinned to its verified digest:
 
 ```text
-public.ecr.aws/c1t8q5x5/fedcli@sha256:d63a4ef714b0653bf20e0c9aa9d8e6df2c979397e3a52024ee098ba12ce2484d
+ghcr.io/ronwarshawsky/fedcli@sha256:d63a4ef714b0653bf20e0c9aa9d8e6df2c979397e3a52024ee098ba12ce2484d
 ```
 
 The wrapper:
@@ -103,4 +103,4 @@ The test runs the actual wrapper and FedCLI image without a database connection.
 
 The included `Release Action` workflow validates the pinned image reference, documentation, Docker wrapper, and real non-connecting FedCLI invocation for an existing `vX.Y.Z` tag. Start it with **Actions → Release Action → Run workflow**, supplying the tag. It creates the matching GitHub release and updates the stable major reference, such as `v1`, through the GitHub API. Keeping the initial Marketplace release as a draft until its Marketplace checkbox is selected avoids an accidental release outside that required interactive flow.
 
-The FedCLI base image remains digest-pinned deliberately. Do not automatically replace it with an unreviewed `latest` image. For a new FedCLI release, update the immutable ECR image reference in both `Dockerfile` and this README, run `./scripts/verify-package.sh`, validate against a non-production database, then tag the Action release. This preserves the supply-chain boundary while automating repeatable release validation and release/tag publication.
+The FedCLI base image remains digest-pinned deliberately. Do not automatically replace it with an unreviewed `latest` image. For a new FedCLI release, update the immutable public GHCR image reference in both `Dockerfile` and this README, run `./scripts/verify-package.sh`, validate against a non-production database, then tag the Action release. This preserves the supply-chain boundary while automating repeatable release validation and release/tag publication.
