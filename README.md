@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: ronwarshawsky/fedcli-action@v1
+      - uses: applextech/fedcli-action@v1
         with:
           connection-url: ${{ secrets.FEDCLI_CONNECTION_URL }}
           sql: SELECT 1;
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: ronwarshawsky/fedcli-action@v1
+      - uses: applextech/fedcli-action@v1
         with:
           connection-url: ${{ secrets.FEDCLI_CONNECTION_URL }}
           script: ops/check.sql
@@ -88,7 +88,7 @@ jobs:
 
 ## Marketplace Publication Checklist
 
-1. Create a dedicated public GitHub repository, for example `ronwarshawsky/fedcli-action`.
+1. Create a dedicated public GitHub repository, for example `applextech/fedcli-action`.
 2. Copy the contents of this directory to that repository root, retaining exactly one root `action.yml`.
 3. Run the local Docker validation below and a real workflow on a non-production target.
 4. Accept the GitHub Marketplace Developer Agreement for the publishing account.
