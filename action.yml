@@ -1,4 +1,4 @@
-name: "FedCLI - Run Database SQL"
+name: "FedCLI - Universal Database Automation"
 description: "Run FedCLI, a universal database CLI, for federation, automation, and checks in GitHub Actions."
 author: "ApplexTech"
 branding:
