@@ -1,0 +1,14 @@
+name: Run a bounded FedCLI query
+
+on:
+  workflow_dispatch:
+
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run the query
+        uses: ronwarshawsky/fedcli-action@v1
+        with:
+          connection-url: ${{ secrets.FEDCLI_CONNECTION_URL }}
+          sql: SELECT CURRENT_TIMESTAMP;

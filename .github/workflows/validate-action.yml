@@ -1,0 +1,17 @@
+name: Validate Action
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-reference-smoke-test:
+    name: Validate published v1 on a GitHub-hosted runner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run the public Action without registry credentials
+        uses: ronwarshawsky/fedcli-action@v1
+        with:
+          sql: SHOW LICENSE

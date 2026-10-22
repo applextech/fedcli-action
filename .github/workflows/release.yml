@@ -1,0 +1,46 @@
+name: Release Action
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing vX.Y.Z tag to validate, release, and promote to its stable major tag"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.tag }}
+      - name: Verify the immutable base-image reference and documentation
+        run: ./scripts/verify-package.sh
+      - name: Build the Action wrapper
+        run: docker build -t fedcli-github-action:test .
+      - name: Run the real Action wrapper without database or registry credentials
+        run: docker run --rm -e INPUT_SQL="SHOW LICENSE" -e GITHUB_WORKSPACE=/github/workspace fedcli-github-action:test
+      - name: Create the release and update its stable major reference
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          tag="${{ inputs.tag }}"
+          case "$tag" in
+            v[0-9]*.[0-9]*.[0-9]*) ;;
+            *) echo "Expected a vX.Y.Z tag, got: $tag" >&2; exit 2 ;;
+          esac
+          tag_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$tag" --jq .object.sha)"
+          major="${tag%%.*}"
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create "$tag" --repo "$GITHUB_REPOSITORY" --generate-notes --verify-tag
+          if gh api --method PATCH "repos/$GITHUB_REPOSITORY/git/refs/tags/$major" \
+              -f sha="$tag_sha" -F force=true >/dev/null 2>&1; then
+            exit 0
+          fi
+          gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
+            -f ref="refs/tags/$major" -f sha="$tag_sha" >/dev/null
