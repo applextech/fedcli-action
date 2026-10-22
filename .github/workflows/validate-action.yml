@@ -12,6 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run the public Action without registry credentials
-        uses: ronwarshawsky/fedcli-action@v1
+        uses: applextech/fedcli-action@v1
         with:
           sql: SHOW LICENSE
