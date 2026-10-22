@@ -21,7 +21,18 @@ jobs:
       - name: Verify the immutable base-image reference and documentation
         run: ./scripts/verify-package.sh
       - name: Build the Action wrapper
-        run: docker build -t fedcli-github-action:test .
+        run: |
+          # ECR Public can transiently rate-limit shared GitHub-hosted runner IPs.
+          for delay in 0 15 30 60; do
+            if [ "$delay" -gt 0 ]; then
+              echo "Retrying Docker build after ${delay}s..."
+              sleep "$delay"
+            fi
+            if docker build -t fedcli-github-action:test .; then
+              exit 0
+            fi
+          done
+          exit 1
       - name: Run the real Action wrapper without database or registry credentials
         run: docker run --rm -e INPUT_SQL="SHOW LICENSE" -e GITHUB_WORKSPACE=/github/workspace fedcli-github-action:test
       - name: Create the release and update its stable major reference
