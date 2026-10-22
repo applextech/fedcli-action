@@ -19,7 +19,7 @@ jobs:
         with:
           ref: ${{ inputs.tag }}
       - name: Verify the immutable base-image reference and documentation
-        run: ./scripts/verify-package.sh
+        run: sh ./scripts/verify-package.sh
       - name: Build the Action wrapper
         run: |
           # ECR Public can transiently rate-limit shared GitHub-hosted runner IPs.
