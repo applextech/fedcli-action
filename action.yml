@@ -1,22 +1,22 @@
-name: "FedCLI Run SQL"
-description: "Run a bounded FedCLI SQL command or checked-in SQL script from a GitHub Actions Linux runner."
-author: "FedCLI"
+name: "FedCLI — Run Database SQL"
+description: "Run database SQL checks and checked-in scripts with FedCLI in GitHub Actions."
+author: "ApplexTech"
 branding:
   icon: "database"
-  color: "blue"
+  color: "orange"
 
 inputs:
   connection-url:
-    description: "Optional database URL. Pass secrets through GitHub Secrets, never as a literal workflow value."
+    description: "Optional database connection URL. Store credentials in GitHub Secrets; never inline them in workflows."
     required: false
   sql:
-    description: "One FedCLI SQL command or semicolon-delimited command sequence. Mutually exclusive with script."
+    description: "SQL command or semicolon-delimited command sequence. Provide exactly one of sql or script."
     required: false
   script:
-    description: "Path to a checked-in SQL script relative to working-directory. Mutually exclusive with sql."
+    description: "Checked-in SQL script path relative to working-directory. Provide exactly one of sql or script."
     required: false
   working-directory:
-    description: "Directory under GITHUB_WORKSPACE that contains script."
+    description: "Repository directory containing script. Defaults to the repository root."
     required: false
     default: "."
 
