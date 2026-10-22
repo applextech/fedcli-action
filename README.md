@@ -1,6 +1,15 @@
 # FedCLI GitHub Action
 
-This directory is a standalone, Docker-based GitHub Action package. It runs a bounded FedCLI command or a checked-in SQL script from a Linux GitHub Actions runner.
+FedCLI is an AI-assisted universal database CLI for 20+ relational and non-relational engines. Alongside SQL-oriented workflows, it supports federated queries, scripting, export/import, and automation. This Docker-based GitHub Action brings the FedCLI command surface to a Linux GitHub Actions runner for repeatable CI/CD work.
+
+Use it to:
+
+- verify connectivity, metadata, or data-quality preconditions before a release;
+- run a reviewed, version-controlled FedCLI or SQL operational script;
+- automate import/export and other proven database runbooks; and
+- execute a proven federated workflow across configured sources.
+
+FedCLI returns a failed workflow step when it reports an execution error. For interactive use, supported database coverage, automation, federated queries, and AI-assisted workflows, see the [FedCLI documentation](https://applextech.com/docs/), [supported databases](https://applextech.com/docs/supported-databases/), [automation](https://applextech.com/docs/automation/), [federated queries](https://applextech.com/docs/federated-queries/), and [AI-assisted SQL](https://applextech.com/docs/ai-assisted-sql/).
 
 It is intentionally kept as a repository-root-ready bundle. To publish it in GitHub Marketplace, place these files at the root of one dedicated public GitHub repository; do not publish the full FedCLI source repository as the Marketplace Action repository.
 
@@ -25,13 +34,13 @@ The wrapper:
 | Input | Required | Description |
 | --- | --- | --- |
 | `connection-url` | No | Database URL. Supply it from a GitHub Secret, such as `${{ secrets.FEDCLI_CONNECTION_URL }}`. |
-| `sql` | One of `sql` or `script` | One SQL command or semicolon-delimited FedCLI command sequence. |
-| `script` | One of `sql` or `script` | Checked-in SQL script path relative to `working-directory`. |
+| `sql` | One of `sql` or `script` | One FedCLI command or semicolon-delimited SQL command sequence. |
+| `script` | One of `sql` or `script` | Checked-in FedCLI or SQL script path relative to `working-directory`. |
 | `working-directory` | No | Directory beneath `GITHUB_WORKSPACE` containing the script; defaults to `.`. |
 
 ## Usage
 
-### Run a bounded SQL command
+### Run a database health check
 
 ```yaml
 name: Run FedCLI check
@@ -50,7 +59,7 @@ jobs:
           sql: SELECT 1;
 ```
 
-### Run a checked-in script
+### Run a checked-in FedCLI or SQL script
 
 ```yaml
 name: Run FedCLI script

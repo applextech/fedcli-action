@@ -1,5 +1,5 @@
-name: "FedCLI — Run Database SQL"
-description: "Run database SQL checks and checked-in scripts with FedCLI in GitHub Actions."
+name: "FedCLI - Run Database SQL"
+description: "Run FedCLI, a universal database CLI, for federation, automation, and checks in GitHub Actions."
 author: "ApplexTech"
 branding:
   icon: "database"
@@ -10,10 +10,10 @@ inputs:
     description: "Optional database connection URL. Store credentials in GitHub Secrets; never inline them in workflows."
     required: false
   sql:
-    description: "SQL command or semicolon-delimited command sequence. Provide exactly one of sql or script."
+    description: "FedCLI command or semicolon-delimited SQL command sequence. Provide exactly one of sql or script."
     required: false
   script:
-    description: "Checked-in SQL script path relative to working-directory. Provide exactly one of sql or script."
+    description: "Checked-in FedCLI or SQL script path relative to working-directory. Provide exactly one of sql or script."
     required: false
   working-directory:
     description: "Repository directory containing script. Defaults to the repository root."
